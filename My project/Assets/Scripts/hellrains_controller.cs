@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class hellrains_controller : MonoBehaviour
 {
-    private Data data;
     private Rigidbody2D rb;
-
+    private Data data;
     private float time;
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        data = new Data();
+        data = Main_Handler.instance.data;
         time = 0;
+        
     }
 
     

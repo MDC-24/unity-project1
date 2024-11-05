@@ -24,15 +24,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2388496080147444853}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.325, y: 0.162, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8265278408794541444}
   - {fileID: 6468459072381265124}
   m_Father: {fileID: 5976734310274326041}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &4503882687265745454
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,13 +58,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4503882687265745454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.5, w: 0.8660254}
-  m_LocalPosition: {x: -0.42599976, y: 0.3729999, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.10000001, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.20999968, y: 0.26299983, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.10000002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1801586624341757919}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6006555885026050655
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -142,13 +142,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5152668712711215620}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: -0.449, y: 0.13099998, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.092599995, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.009199977, y: 0.13249993, z: 0}
+  m_LocalScale: {x: 0.19999997, y: 0.09259999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1801586624341757919}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &981466385346563639
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 999644734168157524}
   - component: {fileID: 7055740552210099627}
   - component: {fileID: 2586579478412668041}
+  - component: {fileID: -5258942637623710950}
   m_Layer: 0
   m_Name: soldier
   m_TagString: Untagged
@@ -349,4 +350,16 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
+--- !u!114 &-5258942637623710950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282929256800709323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596b98d5feac2c74bab0b24522ea445e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

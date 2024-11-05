@@ -1260,7 +1260,7 @@ PrefabInstance:
     - target: {fileID: 1553586685796922659, guid: bdd85ff7929acd8478c0e3eff30581a0, type: 3}
       propertyPath: miner_GO
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 769531102322283788, guid: fb99f1ce7a4ee24458d2861821500649, type: 3}
     - target: {fileID: 1553586685796922659, guid: bdd85ff7929acd8478c0e3eff30581a0, type: 3}
       propertyPath: gold_TEXT
       value: 

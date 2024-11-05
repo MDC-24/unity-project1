@@ -10,6 +10,8 @@ using UnityEngine.UI;
 //NOTE!!: MAKE SURE EACH SOLDIER KILLS ENEMY THEY THEMSELVES CHOOSE AND MAKE THEIR GUNS TRACK THE ENEMY
 public class Main_Handler : MonoBehaviour
 {
+    public static Main_Handler instance{get; private set;}
+    private void Awake() {instance = this;}
     public Data data;
     [SerializeField] private TMP_Text day_TEXT;
     [SerializeField] private TMP_Text gold_TEXT;
@@ -47,6 +49,7 @@ public class Main_Handler : MonoBehaviour
         
         Miners_Work();
         Rain_Spawner();
+        
     }
 
     public void Manual_Mine_Button()
@@ -137,8 +140,16 @@ public class Main_Handler : MonoBehaviour
         if(time_RS >= 1/data.rain_hz)
         {
             var offset2 = Random.Range(-4.3f,4.3f);
-            Instantiate(rain_GO, new Vector3(rain_spawnpoint.position.x + offset2, rain_spawnpoint.position.y, 0), Quaternion.identity);
+            
+            var rain_clone = Instantiate(rain_GO, new Vector3(rain_spawnpoint.position.x + offset2, rain_spawnpoint.position.y, 0), Quaternion.identity);
             time_RS = 0;
+            data.rain_count++;
+            data.rains[data.rains.Length - data.rain_count] = rain_clone;
+            
+            Debug.Log(data.rain_count);
+
+            
+            
         }
 
 
