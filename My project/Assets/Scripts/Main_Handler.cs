@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
-// when another script needed use singletons!!!
+// when another script needed use singletons!!! (DONE)
 
-//NOTE!!: MAKE SURE EACH SOLDIER KILLS ENEMY THEY THEMSELVES CHOOSE AND MAKE THEIR GUNS TRACK THE ENEMY
+//NOTE!!: MAKE SURE EACH SOLDIER KILLS ENEMY THEY THEMSELVES CHOOSE AND MAKE THEIR GUNS TRACK THE ENEMY (DONE)
 public class Main_Handler : MonoBehaviour
 {
     public static Main_Handler instance{get; private set;}
@@ -17,16 +16,12 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] private TMP_Text gold_TEXT;
 
     [SerializeField] private Button build_B;
-
     [SerializeField] private Button recruit_B;
-
-    
     [SerializeField] private Button recruit2_B;
 
 
     [SerializeField] GameObject soldier_GO;
     [SerializeField] GameObject miner_GO;
-
     [SerializeField] GameObject rain_GO;
 
     [SerializeField] Transform soldier_spawnpoint;
@@ -36,11 +31,12 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] Transform rain_spawnpoint;
 
     
-    private float time_MW;
-    private float time_RS;
+    private float time, time_MW, time_RS;
+    
     void Start()
     {
         data = new Data();
+        gold_TEXT.text = "Gold: " + data.gold;
     }
 
     
@@ -49,6 +45,9 @@ public class Main_Handler : MonoBehaviour
         
         Miners_Work();
         Rain_Spawner();
+        Day_Counter();
+
+        
         
     }
 
@@ -143,15 +142,30 @@ public class Main_Handler : MonoBehaviour
             
             var rain_clone = Instantiate(rain_GO, new Vector3(rain_spawnpoint.position.x + offset2, rain_spawnpoint.position.y, 0), Quaternion.identity);
             time_RS = 0;
+            data.rains[data.rain_arraypos] = rain_clone;
             data.rain_count++;
-            data.rains[data.rains.Length - data.rain_count] = rain_clone;
-            
-            Debug.Log(data.rain_count);
+            data.rain_arraypos++;
+            if(data.rain_arraypos >= data.rains.Length - 1){data.rain_arraypos = 0;}
+            //Debug.Log(data.rain_count);
+            //Debug.Log(data.rain_arraypos);
 
             
             
         }
+    }
 
+    private void Day_Counter()
+    {
+        time = Time.time;
+
+        if(time >= data.day*10)
+        {
+            data.day++;
+
+            day_TEXT.text = "Day: " + data.day;
+        }
+
+        Debug.Log(time);
 
     }
 }

@@ -27,13 +27,15 @@ public class soldier : MonoBehaviour
 
         if(time >= 1/data.soldier_firerate && data.rain_count >=1)
         {
-            Destroy(data.rains[data.rains.Length - data.rain_count]);
+            Destroy(data.rains[data.rain_killcount]);
+            data.rain_killcount++;
             data.rain_count--;
-
+            if(data.rain_killcount >= data.rains.Length - 1){data.rain_killcount = 0;}
             time = 0;
 
             
-            Debug.Log(data.rain_count);
+            //Debug.Log(data.rain_killcount);
+            
 
 
         }

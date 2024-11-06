@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class hellrains_controller : MonoBehaviour
@@ -18,11 +19,17 @@ public class hellrains_controller : MonoBehaviour
     
     private void Update()
     {
-        time += Time.deltaTime;
+        
+        if(time < 15f){time += Time.deltaTime;}
 
-        if(time > 15f && transform.position.y > Camera.main.orthographicSize)
+        else if(time >= 15f && transform.position.y > Camera.main.orthographicSize)
         {
             Destroy(gameObject);
+        }
+
+        else
+        {
+            
         }
     }
 
