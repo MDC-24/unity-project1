@@ -14,6 +14,8 @@ public class Main_Handler : MonoBehaviour
     public Data data;
     [SerializeField] private TMP_Text day_TEXT;
     [SerializeField] private TMP_Text gold_TEXT;
+    [SerializeField] private TMP_Text minercount_TEXT;
+    [SerializeField] private TMP_Text soldiercount_TEXT;
 
     [SerializeField] private Button build_B;
     [SerializeField] private Button recruit_B;
@@ -37,6 +39,8 @@ public class Main_Handler : MonoBehaviour
     {
         data = new Data();
         gold_TEXT.text = "Gold: " + data.gold;
+        minercount_TEXT.text = "Miners: " + data.miner_count + "/" + data.miner_cap;
+        soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
     }
 
     
@@ -77,11 +81,14 @@ public class Main_Handler : MonoBehaviour
     public void Recruit_Button()
     {
         
-        if(data.gold >= 10) // replace 10 with cost var
+        if(data.gold >= 10 && data.soldier_count < data.soldier_cap) // replace 10 with cost var
         {
             data.gold -= 10;
             data.soldier_count++;
+            
             gold_TEXT.text = "Gold: " + data.gold;
+            soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
+            
             offset1 = Random.Range(-1f,1f);
             Instantiate(soldier_GO, new Vector3(soldier_spawnpoint.position.x + offset1,soldier_spawnpoint.position.y,0), Quaternion.identity);
             
@@ -95,11 +102,14 @@ public class Main_Handler : MonoBehaviour
 
     public void Recruit_Button_miner()
     {
-          if(data.gold >= 10) // replace 10 with cost var
+          if(data.gold >= 10 && data.miner_count < data.miner_cap) // replace 10 with cost var
         {
             data.gold -= 10;
             data.miner_count++;
+            
             gold_TEXT.text = "Gold: " + data.gold;
+            minercount_TEXT.text = "Miners: " + data.miner_count + "/" + data.miner_cap;
+            
             offset1 = Random.Range(-1f,1f);
             Instantiate(miner_GO, new Vector3(miner_spawnpoint.position.x + offset1,miner_spawnpoint.position.y,0), Quaternion.identity);
             
@@ -158,7 +168,7 @@ public class Main_Handler : MonoBehaviour
     {
         time = Time.time;
 
-        if(time >= data.day*10)
+        if(time >= data.day*60)
         {
             data.day++;
 
