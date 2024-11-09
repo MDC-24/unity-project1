@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +20,13 @@ public class Main_Handler : MonoBehaviour
     public Data data;
 
     private Upgrade upg1, upg2, upg3, upg4, upg5, upg6;
+    
     [SerializeField] private TMP_Text day_TEXT;
     [SerializeField] private TMP_Text gold_TEXT;
+    [SerializeField] private TMP_Text goldtimer_TEXT;
     [SerializeField] private TMP_Text minercount_TEXT;
     [SerializeField] private TMP_Text soldiercount_TEXT;
+    [SerializeField] private TMP_Text soldierspawntime_TEXT;
 
     //cost texts
     [SerializeField] private TMP_Text minercap_upg_cost_TEXT;
@@ -51,7 +57,9 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] Transform rain_spawnpoint;
 
     
-    private float time, time_MW, time_RS;
+    private float time, time_MW, time_RS, time_SS = 0;
+
+    private int spawnqueue = 0;
     
     void Start()
     {
@@ -59,19 +67,27 @@ public class Main_Handler : MonoBehaviour
         
         upg1 = new Upgrade();
         upg1.effect = 1;
+        upg1.cost = 100;
+        upg1.level = 1;
 
         upg2 = new Upgrade();
         upg2.effect = 1.1f;
         
         upg3 = new Upgrade();
+        upg3.cost = 10;
+        upg3.effect= 0.9f;
+
         
         upg4 = new Upgrade();
         upg4.effect = 1;
+        upg4.cost = 100;
         
         upg5 = new Upgrade();
         upg5.effect = 1.1f;
         
         upg6 = new Upgrade();
+        upg6.effect = 0.9f;
+        upg6.cost = 10;
         
         gold_TEXT.text = "Gold: " + data.gold;
         minercount_TEXT.text = "Miners: " + data.miner_count + "/" + data.miner_cap;
@@ -86,8 +102,10 @@ public class Main_Handler : MonoBehaviour
         
         Miners_Work();
         Rain_Spawner();
+        Soldier_Spawner();
         Day_Counter();
 
+        if(data.miner_count>0){goldtimer_TEXT.text = (int)(data.miner_retrievetime - time_MW) + "s";}
         
         
     }
@@ -143,27 +161,73 @@ public class Main_Handler : MonoBehaviour
             Techtree_UNITS_GO.SetActive(false);
         }
     }
+
+    public void QuarryUnlock_Button()
+    {
+        if(data.gold >= 500)
+        {
+            GameObject.Find("Canvas").transform.FindChild("Tech Tree").transform.FindChild("GameObject").transform.FindChild("Scrolls_PRODUCTION").transform.FindChild("Scroll_PRODUCTION_mine").gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.FindChild("Tech Tree").transform.FindChild("GameObject").transform.FindChild("Scrolls_PRODUCTION").transform.FindChild("Quarry_Unlock Button").gameObject.SetActive(false);
+
+            data.gold -= 500;
+            gold_TEXT.text = "Gold: " + data.gold;
+
+        }
+    }
+      public void FoundryUnlock_Button()
+    {
+        if(data.gold >= 500)
+        {
+            GameObject.Find("Scroll_PRODUCTION_construction").gameObject.SetActive(true);
+            GameObject.Find("Foundry_Unlock Button").gameObject.SetActive(false);
+
+            data.gold -= 500;
+            gold_TEXT.text = "Gold: " + data.gold;
+
+        }
+    }
      
     private float offset1;
     public void Recruit_Button()
     {
         
-        if(data.gold >= 10 && data.soldier_count < data.soldier_cap) // replace 10 with cost var
+        if(data.gold >= 10 && data.soldier_count < data.soldier_cap && spawnqueue < 10) // replace 10 with cost var
         {
             data.gold -= 10;
-            data.soldier_count++;
-            
             gold_TEXT.text = "Gold: " + data.gold;
-            soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
-            
-            offset1 = UnityEngine.Random.Range(-1f,1f);
-            Instantiate(soldier_GO, new Vector3(soldier_spawnpoint.position.x + offset1,soldier_spawnpoint.position.y,0), Quaternion.identity);
-            
-
+            spawnqueue++;
         }
+
+    
         else
         {
             // print insufficient gold
+        }
+    }
+
+    private void Soldier_Spawner()
+    {
+            if(spawnqueue > 0)
+        {
+            time_SS += Time.deltaTime;
+
+            soldierspawntime_TEXT.text = (int)(data.soldier_spawntime - time_SS) + "s x " + spawnqueue;
+
+            Debug.Log(time_SS);
+            Debug.Log(spawnqueue);
+
+            if(time_SS >= data.soldier_spawntime)
+            {
+                data.soldier_count++;
+                soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
+                offset1 = UnityEngine.Random.Range(-1f,1f);
+                Instantiate(soldier_GO, new Vector3(soldier_spawnpoint.position.x + offset1,soldier_spawnpoint.position.y,0), Quaternion.identity);
+
+                spawnqueue--;
+                time_SS = 0;
+            }
+
+
         }
     }
 
@@ -188,18 +252,24 @@ public class Main_Handler : MonoBehaviour
         }
     }    
 
+    private float accum_gold = 0;
     private void Miners_Work()
     {
-        if(data.miner_count >=1){time_MW += Time.deltaTime;}
         
-        if(data.miner_count*data.miner_wc*time_MW >= 1 && data.miner_count >= 1)
+        if(data.miner_count >=1)
+        {
+        time_MW += Time.deltaTime;
+        accum_gold += Time.deltaTime*data.miner_wc*data.miner_count;     
+        }
+        
+
+        if(time_MW >= data.miner_retrievetime && data.miner_count >= 1)
         {
          
-         float golds_added = data.miner_count*data.miner_wc*time_MW;
-
-         data.gold += (int)golds_added;
-         gold_TEXT.text = "Gold: " + data.gold;
+        data.gold += (int)accum_gold;
+        gold_TEXT.text = "Gold: " + data.gold;
         time_MW = 0;
+        accum_gold = 0;
 
         }
         else
@@ -244,7 +314,7 @@ public class Main_Handler : MonoBehaviour
             data.rain_hz += data.day*0.5f;
         }
 
-        Debug.Log(time);
+        
 
     }
 
@@ -255,10 +325,9 @@ public class Main_Handler : MonoBehaviour
     {
         float costx = cost*level;
 
-        cost = Mathf.Pow(costx, power);
+        Mathf.Pow(costx, power);
 
         level++;
-
 
 
     }
@@ -270,14 +339,24 @@ public class Main_Handler : MonoBehaviour
     {
         if(data.gold >= upg1.cost){
         data.gold -= upg1.cost;
+        data.miner_cap += (int)upg1.effect;
+        
         gold_TEXT.text = "Gold: " + data.gold;
         minercount_TEXT.text = "Miners: " + data.miner_count + "/" + data.miner_cap;
 
-        data.miner_cap += (int)upg1.effect;
-
-        Upgrade_varIncrementer(upg1.cost, upg1.effect, upg1.level, upg1.power);
+        
+        upg1.cost = 100*upg1.level;
+        upg1.level++;
+        
+        
+       
+        
 
         minercap_upg_cost_TEXT.text = upg1.cost + "G";
+
+        
+
+        
         }
     }
        public void Minereff_UPG()
@@ -289,28 +368,37 @@ public class Main_Handler : MonoBehaviour
 
         data.miner_wc = data.miner_wc*upg2.effect;
 
-        Upgrade_varIncrementer(upg2.cost, upg2.effect, upg2.level, upg2.power);
+        upg2.cost = (int)(upg2.cost*Mathf.Pow(1.5f,upg2.level));
 
         minereff_upg_cost_TEXT.text = upg2.cost + "G";
         }
     }
        public void Minerretrieve_UPG()
     {
-        data.gold -= data.minercap_upg_cost;
+        data.gold -= upg3.cost;
         gold_TEXT.text = "Gold: " + data.gold;
 
-        data.miner_cap++;
+        data.miner_retrievetime = data.miner_retrievetime*upg3.effect;
+
+        upg3.cost = (int)(upg3.cost*Mathf.Pow(1.5f,upg3.level));
+
+        upg3.level++;
     }
        public void Soldiercap_UPG()
     {
-        if(data.gold >= data.soldiercap_upg_cost){
+        if(data.gold >= upg4.cost){
         data.gold -= upg4.cost;
+        data.soldier_cap += (int)upg4.effect;
+        
         gold_TEXT.text = "Gold: " + data.gold;
         soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
 
-        data.soldier_cap += (int)upg4.effect;
+        upg4.cost = 100*upg4.level;
+        upg4.level++;
 
-        Upgrade_varIncrementer(upg4.cost, upg4.effect, upg4.level, upg4.power);
+        
+
+        
 
         soldiercap_upg_cost_TEXT.text = upg4.cost + "G";
         }
@@ -323,7 +411,7 @@ public class Main_Handler : MonoBehaviour
 
         data.soldier_firerate = data.soldier_firerate*upg5.effect;
 
-        Upgrade_varIncrementer(upg5.cost, upg5.effect, upg5.level, upg5.power);
+        upg5.cost = (int)(upg5.cost*Mathf.Pow(1.5f,upg5.level));
 
         soldierfr_upg_cost_TEXT.text = upg5.cost + "G";
 
@@ -332,12 +420,18 @@ public class Main_Handler : MonoBehaviour
     }
        public void Soldierspawntime_UPG()
     {
-        if(data.gold >= data.minercap_upg_cost){
+        if(data.gold >= upg6.cost)
+        {
         
-        data.gold -= data.minercap_upg_cost;
+        data.gold -= upg6.cost;
         gold_TEXT.text = "Gold: " + data.gold;
 
-        data.miner_cap++;
+        data.soldier_spawntime = data.soldier_spawntime*upg6.effect;
+        
+        upg6.cost = (int)(upg6.cost*Mathf.Pow(1.5f,upg6.level));
+        upg6.level++;
+
+
     }
     }
 }

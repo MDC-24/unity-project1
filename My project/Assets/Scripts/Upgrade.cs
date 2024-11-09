@@ -14,7 +14,7 @@ public class Upgrade
         cost = 10;
         effect = 1;
         level = 1;
-        power = 2f;
+        power = 1.5f;
         
     }
  

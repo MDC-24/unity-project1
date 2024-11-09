@@ -46,14 +46,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   day_TEXT: {fileID: 0}
   gold_TEXT: {fileID: 0}
+  goldtimer_TEXT: {fileID: 0}
   minercount_TEXT: {fileID: 0}
   soldiercount_TEXT: {fileID: 0}
+  soldierspawntime_TEXT: {fileID: 0}
+  minercap_upg_cost_TEXT: {fileID: 0}
+  soldiercap_upg_cost_TEXT: {fileID: 0}
+  minereff_upg_cost_TEXT: {fileID: 0}
+  soldierfr_upg_cost_TEXT: {fileID: 0}
+  soldierspawntime_upg_cost_TEXT: {fileID: 0}
+  minerretrievetime_upg_cost_TEXT: {fileID: 0}
   build_B: {fileID: 0}
   recruit_B: {fileID: 0}
   recruit2_B: {fileID: 0}
   soldier_GO: {fileID: 8282929256800709323, guid: 6c134abba6b217240b16453449e22a19, type: 3}
   miner_GO: {fileID: 769531102322283788, guid: fb99f1ce7a4ee24458d2861821500649, type: 3}
   rain_GO: {fileID: 8409908117406277117, guid: 464618d1df136a4439602a8e40197ba3, type: 3}
+  Techtree_GO: {fileID: 0}
+  Techtree_UNITS_GO: {fileID: 0}
   soldier_spawnpoint: {fileID: 0}
   miner_spawnpoint: {fileID: 0}
   rain_spawnpoint: {fileID: 0}
