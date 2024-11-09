@@ -40,6 +40,9 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] private Button recruit_B;
     [SerializeField] private Button recruit2_B;
 
+    [SerializeField] private Button unlockfoundry_B;
+    [SerializeField] private Button unlockquarry_B;
+
 
     [SerializeField] GameObject soldier_GO;
     [SerializeField] GameObject miner_GO;
@@ -47,6 +50,10 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] GameObject Techtree_GO;
     
     [SerializeField] GameObject Techtree_UNITS_GO;
+
+    [SerializeField] GameObject Techtree_PRODUCTION_GO;
+
+    [SerializeField] GameObject Techtree_CONSTRUCTION_GO;
 
 
 
@@ -162,15 +169,70 @@ public class Main_Handler : MonoBehaviour
         }
     }
 
+    private bool quarryenabled, foundryenabled = false;
+    public void Techtree_PRODUCTION_Button()
+    {
+        if(quarryenabled)
+        {
+            if(Techtree_PRODUCTION_GO.gameObject.activeSelf == false)
+            {
+                Techtree_PRODUCTION_GO.SetActive(true);
+            }
+            else
+            {
+                Techtree_PRODUCTION_GO.SetActive(false);
+            }
+        }
+        else
+        {
+            if(unlockquarry_B.gameObject.activeSelf == false)
+            {
+                unlockquarry_B.gameObject.SetActive(true);
+            }
+            else
+            {
+                unlockquarry_B.gameObject.SetActive(false);
+            }
+        }
+
+        if(foundryenabled)
+        {
+            if(Techtree_CONSTRUCTION_GO.gameObject.activeSelf == false)
+            {
+                Techtree_CONSTRUCTION_GO.SetActive(true);
+            }
+            else
+            {
+                Techtree_CONSTRUCTION_GO.SetActive(false);
+            }
+        }
+        else
+        {
+            if(unlockfoundry_B.gameObject.activeSelf == false)
+            {
+                unlockfoundry_B.gameObject.SetActive(true);
+            }
+            else
+            {
+                unlockfoundry_B.gameObject.SetActive(false);
+            }
+        }
+
+    }
+
     public void QuarryUnlock_Button()
     {
         if(data.gold >= 500)
         {
-            GameObject.Find("Canvas").transform.FindChild("Tech Tree").transform.FindChild("GameObject").transform.FindChild("Scrolls_PRODUCTION").transform.FindChild("Scroll_PRODUCTION_mine").gameObject.SetActive(true);
-            GameObject.Find("Canvas").transform.FindChild("Tech Tree").transform.FindChild("GameObject").transform.FindChild("Scrolls_PRODUCTION").transform.FindChild("Quarry_Unlock Button").gameObject.SetActive(false);
+            Techtree_PRODUCTION_GO.gameObject.SetActive(true);
+            
 
             data.gold -= 500;
             gold_TEXT.text = "Gold: " + data.gold;
+
+            quarryenabled = true;
+
+            unlockquarry_B.gameObject.SetActive(false);
 
         }
     }
@@ -178,11 +240,15 @@ public class Main_Handler : MonoBehaviour
     {
         if(data.gold >= 500)
         {
-            GameObject.Find("Scroll_PRODUCTION_construction").gameObject.SetActive(true);
-            GameObject.Find("Foundry_Unlock Button").gameObject.SetActive(false);
+            Techtree_CONSTRUCTION_GO.gameObject.SetActive(true);
+            
 
             data.gold -= 500;
             gold_TEXT.text = "Gold: " + data.gold;
+
+            foundryenabled = true;
+
+            unlockfoundry_B.gameObject.SetActive(false);
 
         }
     }
