@@ -100,6 +100,9 @@ public class Main_Handler : MonoBehaviour
         minercount_TEXT.text = "Miners: " + data.miner_count + "/" + data.miner_cap;
         soldiercount_TEXT.text = "Soldiers: " + data.soldier_count + "/" + data.soldier_cap;
 
+        quarryenabled = false;
+        foundryenabled = false;
+
         
     }
 
@@ -145,17 +148,14 @@ public class Main_Handler : MonoBehaviour
         {
             Techtree_GO.gameObject.SetActive(true);
         }
+        else
+        {
+            Techtree_GO.gameObject.SetActive(false);
+        }
         
     }
 
-    public void Labexit_Button()
-    {
-        
-        Techtree_UNITS_GO.SetActive(false);
-        Techtree_GO.gameObject.SetActive(false);
-            
-       
-    }
+  
 
     public void Techtree_UNITS_Button()
     {
@@ -169,7 +169,7 @@ public class Main_Handler : MonoBehaviour
         }
     }
 
-    private bool quarryenabled, foundryenabled = false;
+    private bool quarryenabled, foundryenabled ;
     public void Techtree_PRODUCTION_Button()
     {
         if(quarryenabled)
@@ -232,7 +232,7 @@ public class Main_Handler : MonoBehaviour
 
             quarryenabled = true;
 
-            unlockquarry_B.gameObject.SetActive(false);
+            Destroy(unlockquarry_B.gameObject);
 
         }
     }
@@ -248,7 +248,7 @@ public class Main_Handler : MonoBehaviour
 
             foundryenabled = true;
 
-            unlockfoundry_B.gameObject.SetActive(false);
+            Destroy(unlockfoundry_B.gameObject);
 
         }
     }
