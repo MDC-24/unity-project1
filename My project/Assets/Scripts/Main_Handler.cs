@@ -36,6 +36,9 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] private TMP_Text soldierspawntime_upg_cost_TEXT;
     [SerializeField] private TMP_Text minerretrievetime_upg_cost_TEXT;
 
+    [SerializeField] private TMP_Text Quarry_Lvl_TEXT;
+    [SerializeField] private TMP_Text Foundry_Lvl_TEXT;
+
     [SerializeField] private Button build_B;
     [SerializeField] private Button recruit_B;
     [SerializeField] private Button recruit2_B;
@@ -47,6 +50,7 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] GameObject soldier_GO;
     [SerializeField] GameObject miner_GO;
     [SerializeField] GameObject rain_GO;
+    
     [SerializeField] GameObject Techtree_GO;
     
     [SerializeField] GameObject Techtree_UNITS_GO;
@@ -54,6 +58,9 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] GameObject Techtree_PRODUCTION_GO;
 
     [SerializeField] GameObject Techtree_CONSTRUCTION_GO;
+
+    [SerializeField] GameObject Buildpanel_GO;
+    [SerializeField] GameObject Buildpanel_Production_GO;
 
 
 
@@ -120,11 +127,7 @@ public class Main_Handler : MonoBehaviour
         
     }
 
-    public void Manual_Mine_Button()
-    {
-        data.gold += 1;
-        gold_TEXT.text = "Gold: " + data.gold;
-    }
+
 
     public void Barracks_Button()
     {
@@ -144,7 +147,7 @@ public class Main_Handler : MonoBehaviour
 
     public void Lab_Button()
     {
-        if(Techtree_GO.gameObject.activeSelf == false)
+        if(Techtree_GO.gameObject.activeSelf == false && Buildpanel_GO.gameObject.activeSelf == false)
         {
             Techtree_GO.gameObject.SetActive(true);
         }
@@ -153,6 +156,27 @@ public class Main_Handler : MonoBehaviour
             Techtree_GO.gameObject.SetActive(false);
         }
         
+    }
+
+    public void Build_Button()
+    {
+        if(Buildpanel_GO.gameObject.activeSelf == false && Techtree_GO.gameObject.activeSelf == false)
+        {Buildpanel_GO.gameObject.SetActive(true);}
+        
+        else
+        {Buildpanel_GO.gameObject.SetActive(false);}
+
+
+    }
+
+    public void Buildpanel_Production_Button()
+    {
+
+        if(Buildpanel_Production_GO.transform.GetChild(1).gameObject.activeSelf == false)
+        {Buildpanel_Production_GO.transform.GetChild(1).gameObject.SetActive(true);}
+        
+        else{Buildpanel_Production_GO.transform.GetChild(1).gameObject.SetActive(false);}
+
     }
 
   
@@ -220,6 +244,7 @@ public class Main_Handler : MonoBehaviour
 
     }
 
+    
     public void QuarryUnlock_Button()
     {
         if(data.gold >= 500)
@@ -231,6 +256,8 @@ public class Main_Handler : MonoBehaviour
             gold_TEXT.text = "Gold: " + data.gold;
 
             quarryenabled = true;
+
+            Quarry_Lvl_TEXT.text = "Lvl 1";
 
             Destroy(unlockquarry_B.gameObject);
 
@@ -248,6 +275,8 @@ public class Main_Handler : MonoBehaviour
 
             foundryenabled = true;
 
+            Foundry_Lvl_TEXT.text = "Lvl 1";
+
             Destroy(unlockfoundry_B.gameObject);
 
         }
@@ -257,7 +286,7 @@ public class Main_Handler : MonoBehaviour
     public void Recruit_Button()
     {
         
-        if(data.gold >= 10 && data.soldier_count < data.soldier_cap && spawnqueue < 10) // replace 10 with cost var
+        if(data.gold >= 10 && data.soldier_count < data.soldier_cap && spawnqueue < data.soldier_cap - data.soldier_count) // replace 10 with cost var
         {
             data.gold -= 10;
             gold_TEXT.text = "Gold: " + data.gold;
@@ -291,6 +320,10 @@ public class Main_Handler : MonoBehaviour
 
                 spawnqueue--;
                 time_SS = 0;
+                if(spawnqueue == 0)
+                {
+                    soldierspawntime_TEXT.text = "";
+                }
             }
 
 
@@ -386,17 +419,6 @@ public class Main_Handler : MonoBehaviour
 
 
 
-
-    private void Upgrade_varIncrementer(float cost, float effect, int level, float power)
-    {
-        float costx = cost*level;
-
-        Mathf.Pow(costx, power);
-
-        level++;
-
-
-    }
 
 
     // LAB RESEARCH & UPGRADE BUTTON FUNCTIONS
