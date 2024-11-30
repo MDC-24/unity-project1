@@ -62,6 +62,9 @@ public class Main_Handler : MonoBehaviour
     [SerializeField] GameObject Buildpanel_GO;
     [SerializeField] GameObject Buildpanel_Production_GO;
 
+    [SerializeField] GameObject Quarry_GO;
+    [SerializeField] GameObject Quarryhole_GO;
+
 
 
     [SerializeField] Transform soldier_spawnpoint;
@@ -109,6 +112,7 @@ public class Main_Handler : MonoBehaviour
 
         quarryenabled = false;
         foundryenabled = false;
+        productiontree_open = false;
 
         
     }
@@ -131,15 +135,15 @@ public class Main_Handler : MonoBehaviour
 
     public void Barracks_Button()
     {
-        if(build_B.isActiveAndEnabled && recruit_B.isActiveAndEnabled && recruit2_B.isActiveAndEnabled)
+        if(recruit_B.isActiveAndEnabled && recruit2_B.isActiveAndEnabled)
         {
-            build_B.gameObject.SetActive(false);
+            
             recruit_B.gameObject.SetActive(false);
             recruit2_B.gameObject.SetActive(false);
         }
         else
         {
-            build_B.gameObject.SetActive(true);
+            
             recruit_B.gameObject.SetActive(true);
             recruit2_B.gameObject.SetActive(true);
         }
@@ -147,21 +151,32 @@ public class Main_Handler : MonoBehaviour
 
     public void Lab_Button()
     {
-        if(Techtree_GO.gameObject.activeSelf == false && Buildpanel_GO.gameObject.activeSelf == false)
+        if(Techtree_GO.gameObject.activeSelf == false)
         {
             Techtree_GO.gameObject.SetActive(true);
+            if(Buildpanel_GO.gameObject.activeSelf == true)
+            {
+            Buildpanel_GO.SetActive(false);
+            }
         }
         else
         {
             Techtree_GO.gameObject.SetActive(false);
         }
+       
         
     }
 
     public void Build_Button()
     {
-        if(Buildpanel_GO.gameObject.activeSelf == false && Techtree_GO.gameObject.activeSelf == false)
-        {Buildpanel_GO.gameObject.SetActive(true);}
+        if(Buildpanel_GO.gameObject.activeSelf == false)
+        {
+            Buildpanel_GO.gameObject.SetActive(true);
+            if(Techtree_GO.gameObject.activeSelf == true)
+            {
+                Techtree_GO.SetActive(false);
+            }    
+        }
         
         else
         {Buildpanel_GO.gameObject.SetActive(false);}
@@ -179,69 +194,111 @@ public class Main_Handler : MonoBehaviour
 
     }
 
+    public void Buildpanel_Quarry_Button()
+    {
+        if(quarryenabled && data.gold >= 1000 && data.quarry_level == 0)
+        {
+            Quarry_GO.SetActive(true);
+            Destroy(Quarryhole_GO);
+            
+            data.quarry_level++;
+            
+            data.gold -= 1000;
+            gold_TEXT.text = "Gold: " + data.gold;
+            
+            
+        }
+        else if (data.quarry_level > 0 && data.gold >= 1000)
+        {
+            data.quarry_level++;
+            Quarry_Lvl_TEXT.text = "Lvl " + data.quarry_level;
+            
+            data.gold -= 1000;
+            gold_TEXT.text = "Gold: " + data.gold;
+
+        }
+
+    }
+
   
+    private bool quarryenabled, foundryenabled, productiontree_open;
 
     public void Techtree_UNITS_Button()
     {
-        if(Techtree_UNITS_GO.gameObject.activeSelf == false)
+        if(productiontree_open == false)
         {
-            Techtree_UNITS_GO.SetActive(true);
-        }
-        else
-        {
-            Techtree_UNITS_GO.SetActive(false);
+            if(Techtree_UNITS_GO.gameObject.activeSelf == false)
+            {
+                Techtree_UNITS_GO.SetActive(true);
+            }
+            else
+            {
+                Techtree_UNITS_GO.SetActive(false);
+            }
         }
     }
 
-    private bool quarryenabled, foundryenabled ;
+    
     public void Techtree_PRODUCTION_Button()
     {
-        if(quarryenabled)
+        if(Techtree_UNITS_GO.gameObject.activeSelf == false)
         {
-            if(Techtree_PRODUCTION_GO.gameObject.activeSelf == false)
+            if(quarryenabled)
             {
-                Techtree_PRODUCTION_GO.SetActive(true);
+                if(Techtree_PRODUCTION_GO.gameObject.activeSelf == false )
+                {
+                    Techtree_PRODUCTION_GO.SetActive(true);
+                    productiontree_open = true;
+                }
+                else
+                {
+                    Techtree_PRODUCTION_GO.SetActive(false);
+                    productiontree_open = false;
+                }
             }
             else
             {
-                Techtree_PRODUCTION_GO.SetActive(false);
+                if(unlockquarry_B.gameObject.activeSelf == false)
+                {
+                    unlockquarry_B.gameObject.SetActive(true);
+                    productiontree_open = true;
+                }
+                else
+                {
+                    unlockquarry_B.gameObject.SetActive(false);
+                    productiontree_open = false;
+                }
             }
-        }
-        else
-        {
-            if(unlockquarry_B.gameObject.activeSelf == false)
-            {
-                unlockquarry_B.gameObject.SetActive(true);
-            }
-            else
-            {
-                unlockquarry_B.gameObject.SetActive(false);
-            }
-        }
 
-        if(foundryenabled)
-        {
-            if(Techtree_CONSTRUCTION_GO.gameObject.activeSelf == false)
+            if(foundryenabled)
             {
-                Techtree_CONSTRUCTION_GO.SetActive(true);
+                if(Techtree_CONSTRUCTION_GO.gameObject.activeSelf == false)
+                {
+                    Techtree_CONSTRUCTION_GO.SetActive(true);
+                    productiontree_open = true;
+                }
+                else
+                {
+                    Techtree_CONSTRUCTION_GO.SetActive(false);
+                    productiontree_open = false;
+                }
             }
             else
             {
-                Techtree_CONSTRUCTION_GO.SetActive(false);
+                if(unlockfoundry_B.gameObject.activeSelf == false)
+                {
+                    unlockfoundry_B.gameObject.SetActive(true);
+                    productiontree_open = true;
+                }
+                else
+                {
+                    unlockfoundry_B.gameObject.SetActive(false);
+                    productiontree_open = false;
+                }
             }
-        }
-        else
-        {
-            if(unlockfoundry_B.gameObject.activeSelf == false)
-            {
-                unlockfoundry_B.gameObject.SetActive(true);
-            }
-            else
-            {
-                unlockfoundry_B.gameObject.SetActive(false);
-            }
-        }
 
+            
+        }
     }
 
     
@@ -256,7 +313,7 @@ public class Main_Handler : MonoBehaviour
             gold_TEXT.text = "Gold: " + data.gold;
 
             quarryenabled = true;
-
+            
             Quarry_Lvl_TEXT.text = "Lvl 1";
 
             Destroy(unlockquarry_B.gameObject);
@@ -274,7 +331,7 @@ public class Main_Handler : MonoBehaviour
             gold_TEXT.text = "Gold: " + data.gold;
 
             foundryenabled = true;
-
+            
             Foundry_Lvl_TEXT.text = "Lvl 1";
 
             Destroy(unlockfoundry_B.gameObject);

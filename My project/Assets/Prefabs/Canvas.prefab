@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lvl 1
+  m_text: LOCKED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1468,7 +1468,7 @@ GameObject:
   - component: {fileID: 6324772152799795615}
   - component: {fileID: 7106051188666305753}
   m_Layer: 5
-  m_Name: defensivebuildings
+  m_Name: defensivebuildings_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2835,7 +2835,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lvl 1
+  m_text: LOCKED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3578,7 +3578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5473490909771221526
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3682,19 +3682,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9218521635864993671}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Main_Handler, Assembly-CSharp
-        m_MethodName: Techtree_PRODUCTION_Button
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2217177570576588231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4704,7 +4692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2195257036584547561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4787,12 +4775,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6525230305864522260}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6525230305864522260
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8433,7 +8421,7 @@ GameObject:
   - component: {fileID: 8759379936033923089}
   - component: {fileID: 4424673359850764443}
   m_Layer: 5
-  m_Name: productionbuildings
+  m_Name: productionbuildings_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8544,7 +8532,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Main_Handler, Assembly-CSharp
-        m_MethodName: Techtree_PRODUCTION_Button
+        m_MethodName: Buildpanel_Production_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10223,7 +10211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &577475479105049394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10330,7 +10318,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Main_Handler, Assembly-CSharp
-        m_MethodName: Techtree_PRODUCTION_Button
+        m_MethodName: Buildpanel_Quarry_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
