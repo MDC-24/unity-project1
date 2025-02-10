@@ -8,10 +8,14 @@ public class hellrains_controller : MonoBehaviour
     private Rigidbody2D rb;
     private Data data;
     private float time;
+
+   
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         data = Main_Handler.instance.data;
+        
+
         time = 0;
         
     }
@@ -38,5 +42,18 @@ public class hellrains_controller : MonoBehaviour
         rb.velocity = -data.rain_speed*transform.up*Time.deltaTime*100f;
     }
 
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+
+        
+
+        if(other.tag == "platform")
+        {
+            Debug.Log("hit");
+            Main_Handler.instance.gameover = true;
+        }
+
+
+    }
 
 }

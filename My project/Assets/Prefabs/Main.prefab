@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   day_TEXT: {fileID: 0}
+  day_gameover_TEXT: {fileID: 0}
+  gameover_canv: {fileID: 0}
   gold_TEXT: {fileID: 0}
   goldtimer_TEXT: {fileID: 0}
   minercount_TEXT: {fileID: 0}
@@ -56,6 +58,8 @@ MonoBehaviour:
   soldierfr_upg_cost_TEXT: {fileID: 0}
   soldierspawntime_upg_cost_TEXT: {fileID: 0}
   minerretrievetime_upg_cost_TEXT: {fileID: 0}
+  Quarry_Lvl_TEXT: {fileID: 0}
+  Foundry_Lvl_TEXT: {fileID: 0}
   build_B: {fileID: 0}
   recruit_B: {fileID: 0}
   recruit2_B: {fileID: 0}
@@ -67,3 +71,4 @@ MonoBehaviour:
   soldier_spawnpoint: {fileID: 0}
   miner_spawnpoint: {fileID: 0}
   rain_spawnpoint: {fileID: 0}
+  gameover: 0

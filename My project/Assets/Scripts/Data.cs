@@ -5,23 +5,27 @@ using UnityEngine;
 
 public class Data 
 {
-    public int gold, day, miner_count,miner_cap,soldier_count, soldier_cap, rain_count, rain_arraypos,rain_killcount, quarry_level ,foundry_level;
+    public int click_power,day, miner_count,miner_cap,  soldier_count, soldier_cap, rain_count, rain_arraypos,rain_killcount, quarry_level ,foundry_level;
 
     //Upgrade costs
-    public float miner_wc, miner_retrievetime, rain_speed, rain_hz, soldier_firerate, soldier_spawntime;
+    public float gold, miner_wc, miner_cost, miner_retrievetime, rain_speed, rain_hz, soldier_cost, soldier_firerate, soldier_spawntime;
 
     public GameObject[] rains; 
 
     public Data()
     {
-        gold = 10000;
+        gold = 100;
         day = 1;
+
+        click_power = 1;
         
+        miner_cost = 50f;
         miner_count = 0;
         miner_cap = 10;
         miner_wc = 0.5f;
         miner_retrievetime = 30f; 
         
+        soldier_cost = 50f;
         soldier_count = 0;
         soldier_cap = 10;
         soldier_firerate = 1f;
@@ -32,7 +36,7 @@ public class Data
         rain_count = 0;
         rain_arraypos = 0;
         rain_killcount = 0;
-        rains = new GameObject[1000];
+        rains = new GameObject[100000];
 
         quarry_level = 0;
         foundry_level = 0;
